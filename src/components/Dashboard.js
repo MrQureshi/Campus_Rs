@@ -1,13 +1,10 @@
-import React,{Component} from 'react';
-import {AppBar, Toolbar, Typography, Button } from 'material-ui';
+import React from 'react';
+import {AppBar, Toolbar, Typography } from 'material-ui';
+import Logout from './Signout'
+import {Grid, Paper} from 'material-ui'
 
-import { BrowserRouter as Router,Route, } from 'react-router-dom';
+import withAuthorization from './withAuthorization';
 
-import Nava from './Navigation'
-import Loginform from './loginForm'
-import Signupform from './signupForm'
-
-import * as routes from '../constants/routes';
 
 const styles = {
     root: {
@@ -16,60 +13,42 @@ const styles = {
     flex: {
       flex: 1,
     },
+    paper: {
+        padding:20, 
+        marginTop:10, 
+        marginBottom: 10,
+        marginLeft: 6,
+        marginRight: 6,
+        height:570,
+        overflowY: 'auto'
+    }
   };
+const authCondition = (authUser) => !!authUser;
 
-export default class extends Component{
-    handleClick = () => {
-        // <Router>
-        //     <Route
-        //         exact path={routes.LOGIN}
-        //         component={() => <Loginform />}
-        //     />
-        // </Router>
-        
-        console.log('Clicked')
-        
-      }
-
-    render(){
-        return <div className={styles.root}>
+export default withAuthorization(authCondition)(
+    <div className={styles.root}>
         <AppBar position="static">
             <Toolbar>
                 <Typography variant="display2" color="inherit" style={styles.flex}   >
-                    ADMIN
+                    DASHBOARD
                 </Typography>
-                
-                <Button color="inherit"
-                onClick={this.handleClick}
-                >
-                Login
-                </Button>
+                <Logout />
+                {/* <Button  color="inherit">Logout</Button>    */}
             </Toolbar>
         </AppBar>
-        <div>
-        <Router>
-            <div>
-            <Nava />
-            <hr/>
-            <Route
-                exact path={routes.LOGIN}
-                component={() => <Loginform />}
-            />
-            <Route
-                exact path={routes.SIGNUP}
-                component={() => <Signupform />}
-            />
-            {/* <Route
-                exact path={routes.loginFrom}
-                component={() => <loginform />}
-            />
-            <Route
-                exact path={routes.loginFrom}
-                component={() => <loginform />}
-            /> */}
-            </div>
-        </Router>
-        </div>
+        <Grid container 
+            // spacing={16} 
+        >
+            <Grid item justify="center" xs={4}>
+                <Paper  style={styles.paper} > 
+                
+                </Paper>
+            </Grid>
+            <Grid item justify="center" xs={8}>
+                <Paper style={styles.paper} >
+
+                </Paper>
+            </Grid>
+        </Grid>
     </div>
-    }
-}
+)
