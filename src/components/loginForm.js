@@ -141,4 +141,3 @@ export default withRouter(LoginPage);
 export {
     LoginForm,
 };
-
